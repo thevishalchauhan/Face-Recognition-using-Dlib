@@ -1,0 +1,14 @@
+For dlib package
+---------------------------------
+conda install -c conda-forge dlib
+---------------------------------
+
+For facial_recognition_models
+----------------------------------------------
+conda install -c akode face_recognition_models
+----------------------------------------------
+
+for opencv
+----------------------------------------------
+conda install -c conda-forge opencv
+----------------------------------------------
