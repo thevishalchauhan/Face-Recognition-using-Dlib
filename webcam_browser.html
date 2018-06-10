@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8">
+		<title>WebCam</title>
+		<link rel="stylesheet" href="css/main.css"/>
+	</head>
+	<body>
+		<div class="main">
+			<div class="booth">
+				<video id="video" width="400" height="300"></video>
+				<a href="#" id="capture" class="booth-capture-button">Take Photo</a>
+				<canvas id="canvas" width="400" height="300"></canvas>
+				<img id="photo" src="http://placekitten.com/g/400/300" alt="photo of you"/>
+			</div>
+			<br><br><br><br>
+			<div class="submission">
+				<input id="face-name"type="text"/>
+				<br><br><br>
+				<a href="#" id="face_image" download>
+					<input type="button" value="Submit" id="submit"/>
+				</a>
+			</div>
+		</div>
+		<script src="js/photos.js"></script>
+	</body>
+</html>
