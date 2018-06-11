@@ -59,7 +59,7 @@ while True:
             if face_names[face] not in temp_faces:
                 del face_names[face]
                 del face_locations[face]
-        temp_faces = face_names
+        temp_faces = face_names[::]
 
     # Display the results
     for (top, right, bottom, left), name in zip(face_locations, face_names):
