@@ -21,7 +21,6 @@ face_locations = []
 face_encodings = []
 face_names = []
 process_this_frame = True
-temp_faces = None
 while True:
     # Grab a single frame of video
     ret, frame = video_capture.read()
@@ -52,14 +51,6 @@ while True:
             face_names.append(name)
 
     process_this_frame = not process_this_frame
-    if temp_faces is None:
-        temp_faces = face_names[::]
-    else:
-        for face in range(min(len(temp_faces),len(face_names))):
-            if face_names[face] not in temp_faces:
-                del face_names[face]
-                del face_locations[face]
-        temp_faces = face_names[::]
 
     # Display the results
     for (top, right, bottom, left), name in zip(face_locations, face_names):
