@@ -56,7 +56,7 @@ while True:
         temp_faces = face_names[::]
     else:
         for face in range(min(len(temp_faces),len(face_names))):
-            if temp_faces[face] not in face_names:
+            if face_names[face] not in temp_faces:
                 del face_names[face]
                 del face_locations[face]
         temp_faces = face_names
