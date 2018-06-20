@@ -1,0 +1,68 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8" />
+<script type="text/javascript" src="{{url_for('static',filename='js/canvas2image.js')}}"></script>
+<link rel="stylesheet" href="{{url_for('static',filename='css/main.css')}}">
+</head>
+<body>
+<form method="POST" action="/send/">
+ <div class="main">
+	<div class="booth">
+		<video id="video" width="400" height="300"></video>
+		<a href="#" id="capture" class="booth-capture-button">Take Photo</a>
+		<canvas id="canvas" width="400" height="300"></canvas>
+		<img id="photo" src="http://placekitten.com/g/400/300" alt="photo of you" />
+	</div>
+	<br><br><br><br>
+	<div class="submission">
+		<input id="imgFileName" type="text"/>
+		<input type="button" value="Save/Download" id="save"/>
+		<input type="Submit" value="Submit"/>
+	</div>
+ </div>
+</form>
+<script>
+    function bind () { 
+        $save.onclick = function (e) {
+            var type = "jpeg", 
+				w = $imgW.value,
+                h = $imgH.value;
+                f = $imgFileName.value;
+            Canvas2Image.saveAsImage(canvas, w, h,type,f);
+        }      
+    }
+function onLoad(){
+        $save = document.getElementById('save');
+        $imgW = 600;
+        $imgH = 400;
+        $imgFileName =document.getElementById('imgFileName');
+
+	var video = document.getElementById('video'),
+	canvas = document.getElementById('canvas'),
+	context = canvas.getContext('2d'),
+	vendorUrl = window.URL || window.webkitURL;
+	navigator.getMedia = navigator.getUserMedia || 
+			     navigator.webkitGetUserMedia || 
+			     navigator.mozGetUserMedia || 
+			     navigator.msGetUserMedia;
+
+	navigator.getMedia({
+			video:true,
+			audio:false
+			}, function(stream){
+			   	video.src = vendorUrl.createObjectURL(stream);
+				video.play();
+			}, function(error){
+			   //Error Handling
+			});
+document.getElementById('capture').addEventListener('click',function(){
+								context.drawImage(video,0,0,400,300);
+								photo.setAttribute('src',canvas.toDataURL("image/jpg"));
+								});
+bind();
+}
+onload = onLoad;
+</script>
+</body>
+</html>
