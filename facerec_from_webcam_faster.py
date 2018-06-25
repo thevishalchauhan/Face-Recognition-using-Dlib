@@ -18,22 +18,24 @@ face_locations = []
 face_encodings = []
 face_names = []
 process_this_frame = True
+f_size = 0
 while True:
     # Grab a single frame of video
     ret, frame = video_capture.read()
-    f_size = 0
-    if os.path.getsize("face_encoding.p") > f_size:
+    if os.path.getsize("face_encoding") != f_size:
         known_face_names = []
         known_face_encodings = []
-        with open("face_encoding.p","rb") as f:
+        with open("face_encoding","rb") as f:
             while 1:
                 try:
                     encoding,name = pickle.load(f)
-                    known_face_encodings.append(encoding)
-                    known_face_names.append(name)
+                    known_face_encodings.append(encoding[0])
+                    known_face_names.append(name[0])
+                    print(known_face_names)
                 except EOFError:
                     break
-        f_size = os.path.getsize("face_encoding.p")
+            f_size = os.path.getsize("face_encoding")
+            print(f_size)
     # Resize frame of video to 1/4 size for faster face recognition processing
     small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
 
