@@ -13,8 +13,6 @@ import os
 
 # Get a reference to webcam #0 (the default one)
 video_capture = cv2.VideoCapture(0)
-with open("face_encoding", "rb") as f:
-    ) = pickle.load(f) 
 # Initialize some variables
 face_locations = []
 face_encodings = []
@@ -23,16 +21,19 @@ process_this_frame = True
 while True:
     # Grab a single frame of video
     ret, frame = video_capture.read()
-    known_face_encodings = []
-    known_face_names = []
-    with open("face_encoding.p","rb") as f:
-        while 1:
-            try:
-                encoding,name = pickle.load(f)
-                known_face_encodings.append(encoding)
-                known_face_names.append(name)
-            except EOFError:
-                break
+    f_size = 0
+    if os.path.getsize("face_encoding.p") > f_size:
+        known_face_names = []
+        known_face_encodings = []
+        with open("face_encoding.p","rb") as f:
+            while 1:
+                try:
+                    encoding,name = pickle.load(f)
+                    known_face_encodings.append(encoding)
+                    known_face_names.append(name)
+                except EOFError:
+                    break
+        f_size = os.path.getsize("face_encoding.p")
     # Resize frame of video to 1/4 size for faster face recognition processing
     small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
 
