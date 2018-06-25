@@ -1,6 +1,7 @@
 import face_recognition
 import cv2
 import pickle
+import os
 # This is a demo of running face recognition on live video from your webcam. It's a little more complicated than the
 # other example, but it includes some basic performance tweaks to make things run a lot faster:
 #   1. Process each video frame at 1/4 resolution (though still display it at full resolution)
@@ -13,9 +14,7 @@ import pickle
 # Get a reference to webcam #0 (the default one)
 video_capture = cv2.VideoCapture(0)
 with open("face_encoding", "rb") as f:
-    (known_face_encodings,known_face_names) = pickle.load(f) 
-
-
+    ) = pickle.load(f) 
 # Initialize some variables
 face_locations = []
 face_encodings = []
@@ -24,7 +23,16 @@ process_this_frame = True
 while True:
     # Grab a single frame of video
     ret, frame = video_capture.read()
-
+    known_face_encodings = []
+    known_face_names = []
+    with open("face_encoding.p","rb") as f:
+        while 1:
+            try:
+                encoding,name = pickle.load(f)
+                known_face_encodings.append(encoding)
+                known_face_names.append(name)
+            except EOFError:
+                break
     # Resize frame of video to 1/4 size for faster face recognition processing
     small_frame = cv2.resize(frame, (0, 0), fx=0.25, fy=0.25)
 
